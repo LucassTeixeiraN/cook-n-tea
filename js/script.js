@@ -36,6 +36,8 @@ const regNameIpt = document.querySelector("#reg-name-ipt")
 const regPasswordIpt = document.querySelector("#reg-password-ipt")
 const createAccBtn = document.querySelector("#create-acc-btn")
 
+const userName = document.querySelector("#user-name")
+
 const newNameIpt = document.querySelector("#new-name-ipt")
 const newPasswordIpt = document.querySelector("#new-password-ipt")
 const saveChangesBtn = document.querySelector("#saveChangesBtn")
@@ -205,13 +207,15 @@ createAccBtn.addEventListener("click", () => {
     localStorage.setItem("user", JSON.stringify(user))
     
     registerScreen.style.display = "none"
-    document.body.style.overflowY = "auto"
+    document.body.style.overflowY = "visible"
 })
 
 const isLogged = () => {
     if(localStorage.getItem("user")) {
         registerScreen.style.display = "none"
-        document.body.style.overflowY = "auto"
+        document.body.style.overflowY = "visible"
+    } else {
+        document.body.style.overflowY = "hidden"
     }
 }
 isLogged()
@@ -233,6 +237,8 @@ deleteAccBtn.addEventListener("click", () => {
     registerScreen.style.display = "grid"
     regNameIpt.value = ""
     regPasswordIpt.value = ""
+    window.scrollTo(0,0)
+    isLogged()
 })
 
 newRecipeBtn.addEventListener("click", () => {
