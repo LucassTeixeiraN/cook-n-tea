@@ -54,6 +54,41 @@ const registerScreen = document.querySelector("#register-screen")
 
 const categories = ["Beef","Chicken","Dessert","Lamb","Miscellaneous","Pasta","Pork","Seafood","Side","Starter","Vegan","Vegetarian","Breakfast","Goat"]
 
+const loggedInUsernameSpan = document.getElementById('logged-in-username');
+const userModal = document.getElementById('userModal');
+
+const loadAndDisplayUsername = () => {
+    const userString = localStorage.getItem("user"); 
+    if (userString) {
+        try {
+            const user = JSON.parse(userString); 
+            if (loggedInUsernameSpan) {
+                loggedInUsernameSpan.textContent = user.name || "Usuário desconhecido"; 
+            }
+            if (newNameIpt) {
+                newNameIpt.value = user.name || "";
+            }
+        } catch (e) {
+            console.error("Erro ao fazer parse do JSON do usuário no localStorage:", e);
+            if (loggedInUsernameSpan) {
+                loggedInUsernameSpan.textContent = "Erro ao carregar usuário";
+            }
+        }
+    } else {
+        if (loggedInUsernameSpan) {
+            loggedInUsernameSpan.textContent = "Não logado";
+        }
+        if (newNameIpt) {
+            newNameIpt.value = "";
+        }
+    }
+};
+
+if (userModal) {
+    userModal.addEventListener('shown.bs.modal', loadAndDisplayUsername);
+}
+
+
 const getSearchBarValue = () => {
     return searchBar.value
 }
@@ -178,6 +213,7 @@ const handleBannerClick = async (categoryName) => {
   
   searchRecipe(meal)
 };
+
 
 banners.forEach(banner => {
   if (banner.element) {
